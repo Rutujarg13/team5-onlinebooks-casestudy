@@ -1,0 +1,24 @@
+-- Table: public.users
+
+-- DROP TABLE IF EXISTS public.users;
+
+CREATE TABLE IF NOT EXISTS public.users
+(
+    user_id integer NOT NULL DEFAULT nextval('users_user_id_seq'::regclass),
+    email character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    title character varying(3) COLLATE pg_catalog."default" NOT NULL,
+    first_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    last_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    date_of_birth date NOT NULL,
+    phone character varying(15) COLLATE pg_catalog."default" NOT NULL,
+    address jsonb,
+    password character varying(50) COLLATE pg_catalog."default",
+    is_admin boolean,
+    CONSTRAINT users_pkey PRIMARY KEY (user_id),
+    CONSTRAINT users_email_key UNIQUE (email)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.users
+    OWNER to postgres;

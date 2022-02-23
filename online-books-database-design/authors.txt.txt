@@ -1,0 +1,15 @@
+-- Table: public.authors
+
+--DROP TABLE IF EXISTS public.authors;
+
+CREATE TABLE IF NOT EXISTS public.authors
+(
+    author_id integer NOT NULL,
+    authors_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT authors_pkey PRIMARY KEY (authors_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.authors
+    OWNER to postgres;

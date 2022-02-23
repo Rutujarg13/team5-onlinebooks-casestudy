@@ -1,0 +1,15 @@
+-- Table: public.publishers
+
+-- DROP TABLE IF EXISTS public.publishers;
+
+CREATE TABLE IF NOT EXISTS public.publishers
+(
+    publisher_id integer NOT NULL DEFAULT nextval('publishers_publisher_id_seq'::regclass),
+    publisher_name character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT publishers_pkey PRIMARY KEY (publisher_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.publishers
+    OWNER to postgres;

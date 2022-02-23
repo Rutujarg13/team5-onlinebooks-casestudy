@@ -1,0 +1,15 @@
+-- Table: public.book_categories
+
+-- DROP TABLE IF EXISTS public.book_categories;
+
+CREATE TABLE IF NOT EXISTS public.book_categories
+(
+    category_id integer NOT NULL DEFAULT nextval('book_categories_category_id_seq'::regclass),
+    category_name character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT book_categories_pkey PRIMARY KEY (category_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.book_categories
+    OWNER to postgres;

@@ -1,0 +1,28 @@
+-- Table: public.books
+
+-- DROP TABLE IF EXISTS public.books;
+
+CREATE TABLE IF NOT EXISTS public.books
+(
+    book_id integer NOT NULL DEFAULT nextval('books_book_id_seq'::regclass),
+    title character varying COLLATE pg_catalog."default",
+    publisher_id integer,
+    price real,
+    quantity integer,
+    description text COLLATE pg_catalog."default",
+    category_id integer,
+    CONSTRAINT books_pkey PRIMARY KEY (book_id),
+    CONSTRAINT books_category_id_fkey FOREIGN KEY (category_id)
+        REFERENCES public.book_categories (category_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT books_publisher_id_fkey FOREIGN KEY (publisher_id)
+        REFERENCES public.publishers (publisher_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.books
+    OWNER to postgres;

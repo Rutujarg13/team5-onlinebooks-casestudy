@@ -1,0 +1,23 @@
+-- Table: public.books_authors
+
+-- DROP TABLE IF EXISTS public.books_authors;
+
+CREATE TABLE IF NOT EXISTS public.books_authors
+(
+    author_id integer NOT NULL,
+    book_id integer NOT NULL,
+    CONSTRAINT books_authors_pkey PRIMARY KEY (author_id, book_id),
+    CONSTRAINT books_authors_author_id_fkey FOREIGN KEY (author_id)
+        REFERENCES public.authors (author_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT books_authors_book_id_fkey FOREIGN KEY (book_id)
+        REFERENCES public.books (book_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.books_authors
+    OWNER to postgres;

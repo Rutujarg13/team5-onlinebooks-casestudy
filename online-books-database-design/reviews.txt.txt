@@ -1,0 +1,26 @@
+-- Table: public.reviews
+
+-- DROP TABLE IF EXISTS public.reviews;
+
+CREATE TABLE IF NOT EXISTS public.reviews
+(
+    review_id integer NOT NULL DEFAULT nextval('reviews_review_id_seq'::regclass),
+    book_id integer NOT NULL,
+    user_id integer NOT NULL,
+    rating smallint,
+    comment text COLLATE pg_catalog."default",
+    CONSTRAINT reviews_pkey PRIMARY KEY (review_id),
+    CONSTRAINT reviews_book_id_fkey FOREIGN KEY (book_id)
+        REFERENCES public.books (book_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT reviews_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES public.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.reviews
+    OWNER to postgres;
