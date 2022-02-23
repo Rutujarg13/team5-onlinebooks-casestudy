@@ -12,6 +12,7 @@ app.get("/admin/products", productManagement.getProducts);
 app.post("/admin/products", productManagement.addBook);
 
 app.get("/admin/discounts", productManagement.getDiscounts);
+app.post("/admin/discounts", productManagement.addDiscount);
 
 app.listen(3000, () => {
   console.log("Web server started...");

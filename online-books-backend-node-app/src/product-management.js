@@ -55,31 +55,16 @@ function addBook(req, res) {
             }
           );
         }
-        var bookId;
-        pool.query(
-          "INSERT INTO books (title, publisher_id, price, quantity, description, category_id, cover) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING book_id",
-          [
-            title,
-            publisher_id,
-            price,
-            quantity,
-            description,
-            category_id,
-            cover,
-          ],
-          (error, result) => {
-            if (error) {
-              return res.status(500).send("Internal Error on Server");
-            } else {
-              bookId = result.rows[0].book_id;
-              result = insertBookAuthor(bookId, authorId);
-              if (result != "error") {
-                res.status(201).send(`Book added `);
-              } else {
-                res.status(500).send("Internal Error on Server");
-              }
-            }
-          }
+        insertBook(
+          title,
+          publisher_id,
+          price,
+          quantity,
+          description,
+          category_id,
+          cover,
+          authorId,
+          res
         );
       }
     }
@@ -87,18 +72,65 @@ function addBook(req, res) {
 }
 
 function getDiscounts(req, res) {
-  res.send("This is discounts function");
+  pool.query("SELECT * FROM product_discounts", (error, result) => {
+    if (error) {
+      return res.status(500).send("Internal Error on Server");
+    } else {
+      return res.status(200).send(result.rows);
+    }
+  });
 }
 
-function insertBookAuthor(bookId, authorId) {
+function addDiscount(req, res) {
+  const { book_id, discount } = req.body;
+  pool.query(
+    "INSERT INTO product_discounts (book_id, discount) VALUES ($1, $2)",
+    [book_id, discount],
+    (error, result) => {
+      if (error) {
+        res.status(500).send("Internal Error on Server");
+      } else {
+        res.status(201).send(`Discount added `);
+      }
+    }
+  );
+}
+
+function insertBook(
+  title,
+  publisher_id,
+  price,
+  quantity,
+  description,
+  category_id,
+  cover,
+  authorId,
+  res
+) {
+  var bookId;
+  pool.query(
+    "INSERT INTO books (title, publisher_id, price, quantity, description, category_id, cover) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING book_id",
+    [title, publisher_id, price, quantity, description, category_id, cover],
+    (error, result) => {
+      if (error) {
+        res.status(500).send("Internal Error on Server");
+      } else {
+        bookId = result.rows[0].book_id;
+        result = insertBookAuthor(bookId, authorId, res);
+      }
+    }
+  );
+}
+
+function insertBookAuthor(bookId, authorId, res) {
   pool.query(
     "INSERT INTO books_authors (author_id, book_id) VALUES ($1, $2)",
     [bookId, authorId],
     (error, result) => {
       if (error) {
-        return "error";
+        res.status(500).send("Internal Error on Server");
       } else {
-        return;
+        res.status(201).send(`Book added `);
       }
     }
   );
@@ -116,4 +148,4 @@ function insertBookAuthor(bookId, authorId) {
 //   }
 // );
 
-module.exports = { getProducts, getDiscounts, addBook };
+module.exports = { getProducts, getDiscounts, addBook, addDiscount };
