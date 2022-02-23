@@ -1,12 +1,13 @@
 -- Table: public.authors
 
---DROP TABLE IF EXISTS public.authors;
+-- DROP TABLE IF EXISTS public.authors;
 
 CREATE TABLE IF NOT EXISTS public.authors
 (
-    author_id integer NOT NULL,
-    authors_name character varying(30) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT authors_pkey PRIMARY KEY (authors_id)
+    author_id integer NOT NULL DEFAULT nextval('authors_author_id_seq'::regclass),
+    first_name character varying(30) COLLATE pg_catalog."default",
+    last_name character varying(30) COLLATE pg_catalog."default",
+    CONSTRAINT authors_pkey PRIMARY KEY (author_id)
 )
 
 TABLESPACE pg_default;
