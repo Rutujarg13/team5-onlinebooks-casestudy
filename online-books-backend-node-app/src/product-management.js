@@ -2,23 +2,34 @@ const express = require("express");
 const router = express.Router();
 const body_parser = require("body-parser");
 const Pool = require("pg").Pool;
-
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "onlinebooks",
-  password: "root",
-  port: 5432,
-});
+const db = require("./db/connection");
 
 router.get("/", (req, res) => {
-  pool.query("SELECT * FROM books", (error, result) => {
+  const connection = db;
+  connection.query("SELECT * FROM books", (error, result) => {
     if (error) {
       return res.status(500).send("Internal Error on Server");
     } else {
       return res.status(200).send(result.rows);
     }
   });
+});
+
+router.delete("/delete/:id", (req, res) => {
+  const connection = db;
+  const id = parseInt(req.params.id);
+  connection.query(
+    "WITH a AS (DELETE FROM books_authors WHERE book_id = $1) DELETE FROM books WHERE book_id=$1",
+    [id],
+    (error, result) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send("Internal Server Error");
+      } else {
+        return res.status(200).send(`Book with id ${id} has been deleted`);
+      }
+    }
+  );
 });
 
 //add product
@@ -35,7 +46,8 @@ router.post("/add/", (req, res) => {
     last_name,
   } = req.body;
   let authorId;
-  pool.query(
+  const connection = db;
+  connection.query(
     "SELECT author_id FROM authors WHERE (first_name=$1 AND last_name=$2)",
     [first_name, last_name],
     (error, result) => {
@@ -57,7 +69,7 @@ router.post("/add/", (req, res) => {
             res
           );
         } else {
-          pool.query(
+          connection.query(
             "INSERT INTO authors (first_name, last_name) VALUES ($1, $2) RETURNING author_id",
             [first_name, last_name],
             (error, result) => {
@@ -98,7 +110,8 @@ function insertBook(
   res
 ) {
   var bookId;
-  pool.query(
+  const connection = db;
+  connection.query(
     "INSERT INTO books (title, publisher_id, price, quantity, description, category_id, cover) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING book_id",
     [title, publisher_id, price, quantity, description, category_id, cover],
     (error, result) => {
@@ -114,7 +127,8 @@ function insertBook(
 }
 
 function insertBookAuthor(authorId, bookId, res) {
-  pool.query(
+  const connection = db;
+  connection.query(
     "INSERT INTO books_authors (author_id, book_id) VALUES ($1, $2)",
     [authorId, bookId],
     (error, result) => {

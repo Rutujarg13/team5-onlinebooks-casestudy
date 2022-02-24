@@ -2,17 +2,11 @@ const express = require("express");
 const router = express.Router();
 const body_parser = require("body-parser");
 const Pool = require("pg").Pool;
-
-const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "onlinebooks",
-  password: "root",
-  port: 5432,
-});
+const db = require("./db/connection");
 
 router.get("/", (req, res) => {
-  pool.query("SELECT * FROM product_discounts", (error, result) => {
+  const connection = db;
+  connection.query("SELECT * FROM product_discounts", (error, result) => {
     if (error) {
       return res.status(500).send("Internal Error on Server");
     } else {
@@ -23,7 +17,8 @@ router.get("/", (req, res) => {
 
 router.post("/add/", (req, res) => {
   const { book_id, discount } = req.body;
-  pool.query(
+  const connection = db;
+  connection.query(
     "INSERT INTO product_discounts (book_id, discount) VALUES ($1, $2)",
     [book_id, discount],
     (error, result) => {
@@ -36,9 +31,28 @@ router.post("/add/", (req, res) => {
   );
 });
 
+router.put("/edit/", (req, res) => {
+  const { book_id, discount } = req.body;
+  const connection = db;
+  connection.query(
+    "UPDATE product_discounts SET discount=$2 WHERE book_id=$1",
+    [book_id, discount],
+    (error, result) => {
+      if (error) {
+        res.status(500).send("Internal Error on Server");
+      } else {
+        res
+          .status(201)
+          .send(`Discount for book with id ${book_id} has been updated `);
+      }
+    }
+  );
+});
+
 router.delete("/delete/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  pool.query(
+  const connection = db;
+  connection.query(
     "DELETE FROM product_discounts WHERE book_id=$1",
     [id],
     (error, result) => {
