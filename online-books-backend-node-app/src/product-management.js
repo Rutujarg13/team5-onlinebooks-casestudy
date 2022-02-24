@@ -96,6 +96,23 @@ function addDiscount(req, res) {
   );
 }
 
+function deleteDiscount(req, res) {
+  const id = parseInt(req.params.id);
+  pool.query(
+    "DELETE FROM product_discounts WHERE book_id=$1",
+    [id],
+    (error, result) => {
+      if (error) {
+        return res.status(500).send("Internal Server Error");
+      } else {
+        return res
+          .status(200)
+          .send(`Discount for book with id ${id} has been deleted`);
+      }
+    }
+  );
+}
+
 function insertBook(
   title,
   publisher_id,
@@ -148,4 +165,10 @@ function insertBookAuthor(bookId, authorId, res) {
 //   }
 // );
 
-module.exports = { getProducts, getDiscounts, addBook, addDiscount };
+module.exports = {
+  getProducts,
+  getDiscounts,
+  addBook,
+  addDiscount,
+  deleteDiscount,
+};

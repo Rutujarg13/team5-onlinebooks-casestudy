@@ -13,6 +13,7 @@ app.post("/admin/products", productManagement.addBook);
 
 app.get("/admin/discounts", productManagement.getDiscounts);
 app.post("/admin/discounts", productManagement.addDiscount);
+app.delete("/admin/discounts/:id", productManagement.deleteDiscount);
 
 app.listen(3000, () => {
   console.log("Web server started...");
