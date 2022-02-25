@@ -34,9 +34,10 @@ router.post("/admin/login", (req, res) => {
   const statement = `select * from users where email='${email}' and password = '${password}'`;
   connection.query(statement, (error, data) => {
     const result = {};
-    if (data.rows.length != 0 && data.rows[0].is_admin === 1) {
+    console.log(data);
+    if (data.rows.length != 0 && data.rows[0].is_admin === true) {
       result["status"] = "success";
-      result["data"] = data.rows;
+      result["data"] = data.rows[0].user_id;
     } else {
       result["status"] = "error";
       result["error"] = error;
