@@ -1,0 +1,6 @@
+INSERT INTO users (email, title, first_name, last_name, date_of_birth, phone, address, "password", is_admin) VALUES ('user1@test.com', 'mrs', 'Reena', 'Kumar', '1989-01-26', '919999999999', 
+						  '{"address1":"1409 Silver Street", "address2":"M.G.Road", "postcode":"400011", "city":"Mumbai", "province":"Maharashtra", "country":"India"}',
+						 'pass123', True),
+						 ('admin1@test.com', 'mr', 'John', 'Bond', '1995-12-16', '919999999998', 
+						  '{"address1":"2589 Gold Road", "address2":"South Extn", "postcode":"110049", "city":"Delhi", "province":"Delhi", "country":"India"}',
+						 'pass123', False);
