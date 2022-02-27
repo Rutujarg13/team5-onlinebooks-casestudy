@@ -1,0 +1,74 @@
+<div class="container">
+    <div>
+<h6>Add New Book</h6>
+<form class="form-inline" action="/action_page.php">
+    <div class="input-group ">
+  <div class="form-group ">
+    <input type="text" class="form-control" id="title" placeholder="Title" required>
+  </div>
+  <div class="form-group">
+    <select class="form-control" id="author">
+        <option hidden>Author</option>
+      <option>1</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" id="publisher">
+        <option hidden>Publisher</option>
+      <option>1</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <select class="form-control" id="category">
+        <option hidden>Category</option>
+      <option>1</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="price" placeholder="Price" required>
+  </div>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" id="qty" placeholder="Quantity" required> 
+  </div>
+  <div class="form-group">
+    <div class="custom-file">
+      <input class="custom-file-input" type="file"> 
+    </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</div>
+</form>
+</div>
+<div>
+    <h6 class="mt-5">Edit Book Details</h6>
+    <input type="text" class="form-control mt-5 mb-5" id="search" placeholder="Search"> 
+</div>
+<div>
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Title</td>
+            <td>Author</td>
+            <td>Publisher</td>
+            <td>Category</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td><button class="btn btn-warning">Update</button></td>
+            <td><button class="btn btn-danger">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+</div>
