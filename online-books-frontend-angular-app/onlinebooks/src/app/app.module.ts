@@ -6,20 +6,24 @@ import { FormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
+import { PoductmanagementService } from './services/poductmanagement.service';
+import { DiscountmanagementService } from './services/discountmanagement.service';
 import { ProductmanagementComponent } from './components/productmanagement/productmanagement.component';
+import { DiscountmanagementComponent } from './components/discountmanagement/discountmanagement.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ProductmanagementComponent
+    ProductmanagementComponent,
+    DiscountmanagementComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, PoductmanagementService, DiscountmanagementService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

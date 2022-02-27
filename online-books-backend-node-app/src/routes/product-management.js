@@ -7,13 +7,16 @@ const db = require("../db/connection");
 //GET ALL BOOKS
 router.get("/", (req, res) => {
   const connection = db;
-  connection.query("SELECT * FROM books", (error, result) => {
-    if (error) {
-      return res.status(500).send("Internal Error on Server");
-    } else {
-      return res.status(200).send(result.rows);
+  connection.query(
+    "SELECT * FROM books JOIN publishers on books.publisher_id = publishers.publisher_id JOIN book_categories ON books.category_id = book_categories.category_id;",
+    (error, result) => {
+      if (error) {
+        return res.status(500).send("Internal Error on Server");
+      } else {
+        return res.status(200).send(result.rows);
+      }
     }
-  });
+  );
 });
 
 //DELETE BOOK
@@ -214,6 +217,21 @@ router.get("/bookauthors/:id", (req, res) => {
   connection.query(
     "SELECT * FROM books_authors JOIN authors on books_authors.author_id = authors.author_id WHERE book_id=$1;",
     [bookId],
+    (error, result) => {
+      if (error) {
+        return res.status(500).send("Internal Error on Server");
+      } else {
+        return res.status(200).json(result.rows);
+      }
+    }
+  );
+});
+
+//Get booksAuthors list
+router.get("/booksauthors/", (req, res) => {
+  const connection = db;
+  connection.query(
+    "SELECT * FROM books_authors JOIN authors on books_authors.author_id = authors.author_id;",
     (error, result) => {
       if (error) {
         return res.status(500).send("Internal Error on Server");

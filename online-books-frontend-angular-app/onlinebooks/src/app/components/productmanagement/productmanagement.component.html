@@ -58,13 +58,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Title</td>
-            <td>Author</td>
-            <td>Publisher</td>
-            <td>Category</td>
-            <td>Price</td>
-            <td>Quantity</td>
+          <tr *ngFor="let book of bookList">
+            <td>{{book.title}}</td>
+            <table>
+            <tr *ngFor="let author of booksAuthors">
+              <td *ngIf="author.book_id===book.book_id">{{author.first_name}} {{author.last_name}}</td>
+            </tr>
+          </table>
+            <td>{{book.publisher_name}}</td>
+            <td>{{book.category_name}}</td>
+            <td>{{book.price}}</td>
+            <td>{{book.quantity}}</td>
             <td><button class="btn btn-warning">Update</button></td>
             <td><button class="btn btn-danger">Delete</button></td>
           </tr>
