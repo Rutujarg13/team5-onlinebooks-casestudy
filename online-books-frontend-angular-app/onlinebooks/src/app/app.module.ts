@@ -10,13 +10,15 @@ import { PoductmanagementService } from './services/poductmanagement.service';
 import { DiscountmanagementService } from './services/discountmanagement.service';
 import { ProductmanagementComponent } from './components/productmanagement/productmanagement.component';
 import { DiscountmanagementComponent } from './components/discountmanagement/discountmanagement.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     ProductmanagementComponent,
-    DiscountmanagementComponent
+    DiscountmanagementComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
