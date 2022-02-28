@@ -11,6 +11,7 @@ import { DiscountmanagementService } from './services/discountmanagement.service
 import { ProductmanagementComponent } from './components/productmanagement/productmanagement.component';
 import { DiscountmanagementComponent } from './components/discountmanagement/discountmanagement.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AdminComponent } from './components/admin/admin.component';
     LoginComponent,
     ProductmanagementComponent,
     DiscountmanagementComponent,
-    AdminComponent
+    AdminComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

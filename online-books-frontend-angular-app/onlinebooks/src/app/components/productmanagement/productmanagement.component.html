@@ -41,7 +41,7 @@
 </div>
 <div>
     <h6 class="mt-5">Edit Book Details</h6>
-    <input type="text" class="form-control mt-5 mb-5" id="search" placeholder="Search"> 
+    <input type="text" class="form-control mt-3 mb-3" [value]="filter" id="search" (keyup)="transformFilter($event)" placeholder="Search Titles">
 </div>
 <div>
     <table class="table table-bordered">
@@ -59,6 +59,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let book of bookList">
+            <ng-container *ngIf="book.title.toLowerCase().includes(filter)">
             <td>{{book.title}}</td>
             <table>
             <tr *ngFor="let author of booksAuthors">
@@ -71,6 +72,7 @@
             <td>{{book.quantity}}</td>
             <td><button class="btn btn-warning">Update</button></td>
             <td><button class="btn btn-danger">Delete</button></td>
+          </ng-container>
           </tr>
         </tbody>
       </table>

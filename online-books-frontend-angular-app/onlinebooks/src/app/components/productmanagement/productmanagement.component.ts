@@ -10,6 +10,7 @@ export class ProductmanagementComponent implements OnInit {
   productManagementService: PoductmanagementService;
   bookList:any[]=[];
   booksAuthors:any[]=[];
+  filter:string='';
   constructor(service: PoductmanagementService) {
     this.productManagementService = service;
    }
@@ -28,5 +29,8 @@ export class ProductmanagementComponent implements OnInit {
       console.log(response);
     })
 
+}
+transformFilter(e:any){
+  this.filter=e.target.value.toLowerCase();
 }
 }

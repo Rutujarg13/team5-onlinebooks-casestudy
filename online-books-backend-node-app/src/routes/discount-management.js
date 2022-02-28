@@ -22,8 +22,7 @@ router.post("/add/", (req, res) => {
   const { book_id, discount } = req.body;
   const connection = db;
   connection.query(
-    "INSERT INTO product_discounts (book_id, discount) VALUES ($1, $2)",
-    [book_id, discount],
+    `INSERT INTO product_discounts (book_id, discount) VALUES (${book_id}, ${discount})`,
     (error, result) => {
       if (error) {
         console.log(error);
