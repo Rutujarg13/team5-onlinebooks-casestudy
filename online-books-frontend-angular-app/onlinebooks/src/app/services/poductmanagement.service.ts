@@ -23,5 +23,9 @@ export class PoductmanagementService {
     return this.http.get("http://localhost:3000/api/admin/products/booksauthors/");
   }
 
+  public getCategories(){
+    return this.http.get("http://localhost:3000/api/admin/products/categories");
+  }
+
   
 }

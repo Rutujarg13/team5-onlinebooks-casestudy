@@ -1,11 +1,11 @@
 <div class="container">
     <div>
-<h6>Create New Discount</h6>
+<h6>Book Discount</h6>
 <form class="form-inline" action="/action_page.php">
     <div class="input-group ">
   <div class="form-group">
     <select class="form-control" id="book" [(ngModel)]="bookId" [ngModelOptions]="{standalone: true}">
-    <option hidden>Select Book</option>
+    <option  hidden>Select Book</option>
       <option *ngFor="let book of books" [value]="book.book_id">{{book.title}} {{book.publisher}} {{book.price}}</option>
     </select>
   </div>
@@ -16,9 +16,27 @@
 </div>
 </form>
 </div>
+<p class="text-danger">{{errorMsg}}</p>
+
+<h6>Category Discount</h6>
+<form class="form-inline" action="/action_page.php">
+    <div class="input-group ">
+  <div class="form-group">
+    <select class="form-control" id="category" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
+    <option  hidden>Select Category</option>
+      <option *ngFor="let category of categories" [value]="category.category_id">{{category.category_name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="number" class="form-control" id="discount" [(ngModel)]="discount" [ngModelOptions]="{standalone: true}" placeholder="Discount %" required>
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="addCategoryDiscount()">Add</button>
+</div>
+</form>
+<p class="text-danger">{{categoryErrorMsg}}</p>
 <div>
     <h6 class="mt-5">Edit/Delete Discounts</h6>
-    <input type="text" class="form-control mt-5 mb-5" id="search" placeholder="Search"> 
+    <input type="text" class="form-control mt-3 mb-3" [value]="filter" id="search" (keyup)="transformFilter($event)" placeholder="Search Titles">
 </div>
 <div>
     <table class="table table-bordered">
@@ -37,6 +55,7 @@
         <tbody>
     
           <tr *ngFor="let book of discounts">
+            <ng-container *ngIf="book.title.toLowerCase().includes(filter)">
             <td>{{book.title}}</td>
             <table>
             <tr *ngFor="let author of booksAuthors"> 
@@ -46,9 +65,10 @@
             <td>{{book.publisher_name}}</td>
             <td>{{book.category_name}}</td>
             <td>{{book.price | currency:'INR'}}</td>
-            <td><input type="number" [placeholder]="book.discount"></td>
-            <td><button class="btn btn-warning" (click)="updateDiscount()">Update</button></td>
+            <td><input type="number"  (change)="changeDiscount($event)" [placeholder]="book.discount"></td>
+            <td><button class="btn btn-warning" (click)="updateDiscount(book.book_id)">Update</button></td>
             <td><button class="btn btn-danger" (click)="deleteDiscount(book.book_id)">Delete</button></td>
+          </ng-container>
           </tr>
         </tbody>
       </table>
