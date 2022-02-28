@@ -21,13 +21,7 @@ export class ProductmanagementComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.productManagementService.getAllBooks()
-    .subscribe((response:any)=>{
-      this.bookList = response;
-      console.log("Get all books");
-      console.log(response);
-    }
-    );
+    this.getAllBooks();
 
     this.productManagementService.getBooksAuthors()
     .subscribe((response:any)=>{
@@ -58,6 +52,16 @@ export class ProductmanagementComponent implements OnInit {
     });
 }
 
+getAllBooks(){
+  this.productManagementService.getAllBooks()
+    .subscribe((response:any)=>{
+      this.bookList = response;
+      console.log("Get all books");
+      console.log(response);
+    }
+    );
+}
+
 getAuthorsOfTheBook(bookId:any){
   this.productManagementService.getBookAuthors(bookId)
   .subscribe((response:any)=>{
@@ -76,29 +80,19 @@ deleteBooksAuthor(bookId:number, authorId:number){
   });
 }
 
-deleteBook(){
-  this.productManagementService.deleteBook(this.bookId)
+
+
+deleteBook(bookId:any){
+  this.productManagementService.deleteBook(bookId)
   .subscribe((response:any)=>{
-    console.log("Delete Book")
-    console.log(response);
+    this.getAllBooks();
   });
 }
 
-editBook(title:string, publisherId: number, price:number, quantity:number, description:string, categoryId:number, cover:string){
-let book ={
-  "book_id": this.bookId,
-    "title":title,
-      "publisher_id": publisherId,
-      "price":price,
-      "quantity":quantity,
-      "description":description,
-      "category_id":categoryId,
-      "cover":cover
-};
+editBook(book:any){
   this.productManagementService.editBook(book)
   .subscribe((response:any)=>{
-    console.log("Book Edited");
-    console.log(response);
+    this.getAllBooks();
   });
 }
 

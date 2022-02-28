@@ -24,14 +24,14 @@ router.delete("/delete/:id", (req, res) => {
   const connection = db;
   const id = parseInt(req.params.id);
   connection.query(
-    "WITH a AS (DELETE FROM books_authors WHERE book_id = $1) DELETE FROM books WHERE book_id=$1",
+    "WITH ba AS (DELETE FROM books_authors WHERE book_id = $1), pd AS(DELETE FROM product_discounts WHERE book_id = $1) DELETE FROM books WHERE book_id=$1",
     [id],
     (error, result) => {
       if (error) {
         console.log(error);
         return res.status(500).send("Internal Server Error");
       } else {
-        return res.status(200).send(`Book with id ${id} has been deleted`);
+        return res.status(200).json(`Book with id ${id} has been deleted`);
       }
     }
   );
@@ -97,7 +97,7 @@ router.put("/edit/", (req, res) => {
       } else {
         res
           .status(201)
-          .send(`Details for book with id ${book_id} has been updated `);
+          .json(`Details for book with id ${book_id} has been updated `);
       }
     }
   );
