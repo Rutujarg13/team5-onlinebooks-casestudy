@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import { FormsModule } from "@angular/forms";
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
@@ -12,7 +12,8 @@ import { ProductmanagementComponent } from './components/productmanagement/produ
 import { DiscountmanagementComponent } from './components/discountmanagement/discountmanagement.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { SearchComponent } from './components/search/search.component';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,9 @@ import { SearchComponent } from './components/search/search.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NoopAnimationsModule,
+    MatAutocompleteModule
   ],
   providers: [AuthService, PoductmanagementService, DiscountmanagementService],
   bootstrap: [AppComponent]

@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "ts-sync-request": "^1.4.1"
+  }
+}

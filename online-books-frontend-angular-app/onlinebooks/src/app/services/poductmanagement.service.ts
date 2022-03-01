@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { SyncRequestClient } from 'ts-sync-request';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PoductmanagementService {
   http: HttpClient;
+  httpSync = new SyncRequestClient();
 
   constructor(http:HttpClient) { 
     this.http = http;
@@ -44,15 +46,15 @@ export class PoductmanagementService {
  }
 
  public addAuthor(author_details:any){
-   return this.http.post("http://localhost:3000/api/admin/products/add/author", author_details);
- }
+  return this.httpSync.post("http://localhost:3000/api/admin/products/add/author", author_details);
+  }
 
  public addPublisher(publisher_details:any){
-   return this.http.post("http://localhost:3000/api/admin/products/add/publisher", publisher_details);
+   return this.httpSync.post("http://localhost:3000/api/admin/products/add/publisher", publisher_details);
  }
 
  public addCategory(category_details: any){
-   return this.http.post("http://localhost:3000/api/admin/products/add/category", category_details);
+   return this.httpSync.post("http://localhost:3000/api/admin/products/add/category", category_details);
  }
 
  public deleteBooksAuthor(book_author:any){

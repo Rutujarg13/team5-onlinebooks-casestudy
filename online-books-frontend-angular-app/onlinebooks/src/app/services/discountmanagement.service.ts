@@ -17,7 +17,6 @@ export class DiscountmanagementService {
    }
 
    public addDiscount(book_id:number, discount:number){
-    
      let new_discount:any = {"book_id": book_id, "discount": discount};
      return this.http.post("http://localhost:3000/api/admin/discounts/add/", new_discount);
    }

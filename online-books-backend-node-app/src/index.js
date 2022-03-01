@@ -1,6 +1,7 @@
 const productManagementRoute = require("./routes/product-management");
 const discountManagementRoute = require("./routes/discount-management");
 const authenticationRoute = require("./routes/auth");
+
 const express = require("express");
 const body_parser = require("body-parser");
 const app = express();
