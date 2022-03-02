@@ -16,12 +16,8 @@ export class DiscountmanagementComponent implements OnInit {
   books:any[] = [];
   categories:any[]=[];
   booksAuthors:any[]=[];
-  // discount:any;
-  updatedDiscount:number=0;
   filter:string='';
-  errorMsg='';
-  categoryId:any='Select Category';
-  categoryErrorMsg = '';
+  discountForm:any;
 
   constructor(service: DiscountmanagementService, prodService:PoductmanagementService) { 
     this.discountManagementService = service;
@@ -59,29 +55,34 @@ export class DiscountmanagementComponent implements OnInit {
   }
 
   addDiscount(form:any){
-    console.log(form.value.discount);
-    console.log('submittef');
-  };
-
-  transformFilter(x:any){
-
+  let bookId = form.value.bookId;
+  let discount = form.value.discount;
+  let startStamp = form.value.startDate + " " + form.value.startTime;
+  let endStamp = form.value.endDate + " " + form.value.endTime;
+  let now = Date.now();
+  let isActive = now> Date.parse(startStamp) && now< Date.parse(endStamp) ? true :false;
+  let newDiscount ={
+    "book_id": bookId,
+    "discount": discount,
+    "start_stamp": startStamp, 
+    "end_stamp": endStamp, 
+    "is_active":isActive
   }
+  this.discountManagementService.addDiscount(newDiscount)
+      .subscribe((response:any)=>{
+        this.getDiscounts();
+        // this.discount=0;
+      },(error:any)=>{
+        console.log(error);
+      }
+      );
+      form.resetForm();
+    }
+    
+    transformFilter(e:any){
+      this.filter=e.target.value.toLowerCase();
+    }
 
-//   addDiscount(){
-//     if(this.bookId != 'Select Book'){
-//     // this.bookId= parseInt(this.bookId);
-//     this.discountManagementService.addDiscount(this.bookId, 3)
-//     .subscribe((response:any)=>{
-//       this.getDiscounts();
-//       // this.discount=0;
-//       this.errorMsg='';
-//       this.categoryErrorMsg = '';
-//     },(error:any)=>{
-//       this.errorMsg='This book is already discounted. Use section below to edit or detele the discount for the book.';
-//     }
-//     );
-//   }
-// }
 
   // updateDiscount(bookId:any){
   //   bookId=parseInt(bookId)
@@ -101,10 +102,6 @@ export class DiscountmanagementComponent implements OnInit {
   //   .subscribe((Response:any)=>{
   //     this.getDiscounts();
   //   })
-  // }
-
-  // transformFilter(e:any){
-  //   this.filter=e.target.value.toLowerCase();
   // }
 
   // addCategoryDiscount(){

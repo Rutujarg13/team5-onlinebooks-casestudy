@@ -16,7 +16,7 @@
   <div class="col-md-3">
     <label for="discount">Discount</label>
     <div class="input-group">
-      <input type="number" class="form-control" id="discount" ngModel  name="discount"  #discount="ngModel" placeholder="Discount %" required>
+      <input type="number" min="0" class="form-control" id="discount" ngModel  name="discount"  #discount="ngModel" placeholder="Discount %" required>
       <div class="input-group-apend"><div class="input-group-text">%</div></div>
     </div>
   </div>
@@ -31,7 +31,7 @@
   <div class="col-md-2">
     <label for="startTime">Start Time</label>
     <div class="input-group">
-      <input type="time" id="startTime" class="form-control" ngModel  name="starTime"  #startTime="ngModel"  required>
+      <input type="time" id="startTime" class="form-control" ngModel  name="startTime"  #startTime="ngModel"  required>
     </div>
   </div>
   <div class="col-md-3">
