@@ -3,60 +3,71 @@
 <h6 class="mb-3">Add Book Discount</h6>
 
 <form class="form-inline">
+  <div class="form-control">
   <div class="row">
-  <div class="form-group col-4">
+  <div class="col-md-4">
   <label for="book">Book</label>
   <div class="input-group">
-    <select class="form-control" id="book" [(ngModel)]="bookId" [ngModelOptions]="{standalone: true}">
+    <select class="form-control" id="book" ngModel  name="bookId"  #bookId="ngModel" required>
     <option  hidden>Select Book</option>
       <option *ngFor="let book of books" [value]="book.book_id">{{book.title}}</option>
     </select>
   </div>
 </div>
-  <div class="form-group col-2">
+  <div class="col-md-3">
     <label for="discount">Discount</label>
     <div class="input-group">
-      <input type="number" class="form-control" id="discount" [(ngModel)]="discount" [ngModelOptions]="{standalone: true}" placeholder="Discount %" required>
+      <input type="number" class="form-control" id="discount" ngModel  name="discount"  #discount="ngModel" placeholder="Discount %" required>
       <div class="input-group-apend"><div class="input-group-text">%</div></div>
     </div>
   </div>
 </div>
   <div class="row pt-4">
-  <div class="form-group col-3">
-    <label for="start-date">Start Date</label>
+  <div class="col-md-3">
+    <label for="startDate">Start Date</label>
     <div class="input-group">
-      <input type="date" id="start-date" class="form-control" required>
+      <input type="date" id="startDate" class="form-control"  ngModel  name="startDate"  #startDate="ngModel" [min]="minDate"   required>
     </div>
   </div>
-  <div class="form-group col-2">
-    <label for="start-time">Start Time</label>
+  <div class="col-md-2">
+    <label for="startTime">Start Time</label>
     <div class="input-group">
-      <input type="time" id="start-time" class="form-control" required>
+      <input type="time" id="startTime" class="form-control" ngModel  name="starTime"  #startTime="ngModel"  required>
     </div>
   </div>
-  <div class="form-group col-3">
-    <label for="end-date">End Date</label>
+  <div class="col-md-3">
+    <label for="endDate">End Date</label>
     <div class="input-group">
-      <input type="date" id="end-date" class="form-control" required>
+      <input type="date" id="endDate" class="form-control" ngModel  name="endDate"  #endDate="ngModel" [min]="minDate"   required>
     </div>
   </div>
-  <div class="form-group col-2">
-    <label for="start-time">End Time</label>
+  <div class="col-md-2">
+    <label for="endTime">End Time</label>
     <div class="input-group">
-      <input type="time" id="end-time" class="form-control" required>
+      <input type="time" id="endTime" class="form-control"  ngModel  name="endTime"  #endTime="ngModel"  required>
     </div>
   </div>
   </div>
   <div class="row">
-  <div class="form-group">
+  <div>
     <label></label>
   <div class="input-group ">
   <button type="submit" style="width: 10%;" class="btn btn-primary" (click)="addDiscount()">Add</button>
 </div>
 </div>
 </div>
+</div>
 </form>
-<p class="text-danger mb-5">{{errorMsg}}</p>
+<div class="alert alert-danger" *ngIf="discount.touched && !discount.valid">Please add the discount value</div>
+<div class="alert alert-danger" *ngIf="bookId.touched && !bookId.valid">Please select the book for which the discount should be applied</div>
+<div class="alert alert-danger" *ngIf="startDate.touched && !startDate.valid">Please select the start date when the discount will be applied</div>
+<div class="alert alert-danger" *ngIf="startTime.touched && !startTime.valid">Please select the start time when the discount will be applied</div>
+<div class="alert alert-danger" *ngIf="endDate.touched && !endDate.valid">Please select the date when the discount will expire</div>
+<div class="alert alert-danger" *ngIf="endTime.touched && !endTime.valid">Please select the time when the discount will expire</div>
+<div class="alert alert-danger" *ngIf="endDate.touched && startDate.touched && startDate.value>endDate.value">The start date selected is later than the end date selected</div>
+<div class="alert alert-danger" *ngIf="startTime.touched && endTime.touched && endDate.touched && startDate.touched && startDate.value==endDate.value && startTime.value>endTime.value">The start time selected is later than the end time selected</div>
+
+
 </div>
 
 
