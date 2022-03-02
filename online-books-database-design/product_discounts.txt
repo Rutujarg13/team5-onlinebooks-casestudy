@@ -1,19 +1,14 @@
--- Table: public.product_discounts
-
--- DROP TABLE IF EXISTS public.product_discounts;
 
 CREATE TABLE IF NOT EXISTS public.product_discounts
 (
+    discount_id SERIAL PRIMARY KEY,
     book_id integer NOT NULL,
     discount real NOT NULL,
-    CONSTRAINT product_discounts_pkey PRIMARY KEY (book_id),
+    start_stamp timestamp without time zone NOT NULL,
+    end_stamp timestamp without time zone NOT NULL,
+    is_active boolean NOT NULL,
     CONSTRAINT product_discounts_book_id_fkey FOREIGN KEY (book_id)
         REFERENCES public.books (book_id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.product_discounts
-    OWNER to postgres;

@@ -19,10 +19,10 @@ router.get("/", (req, res) => {
 });
 
 router.post("/add/", (req, res) => {
-  const { book_id, discount } = req.body;
+  const { book_id, discount, start_stamp, end_stamp, is_active } = req.body;
   const connection = db;
   connection.query(
-    `INSERT INTO product_discounts (book_id, discount) VALUES (${book_id}, ${discount})`,
+    `INSERT INTO product_discounts (book_id, discount, start_stamp, end_stamp, is_active) VALUES (${book_id}, ${discount},  TO_TIMESTAMP('${start_stamp}', 'YYYY-MM-DD HH24:MI'), TO_TIMESTAMP('${end_stamp}', 'YYYY-MM-DD HH24:MI'), ${is_active})`,
     (error, result) => {
       if (error) {
         console.log(error);
