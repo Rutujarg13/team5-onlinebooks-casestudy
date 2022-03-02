@@ -50,8 +50,6 @@ export class DiscountmanagementComponent implements OnInit {
     .subscribe((response:any)=>{
       this.discounts=response;
     });
-
-
   }
 
   addDiscount(form:any){

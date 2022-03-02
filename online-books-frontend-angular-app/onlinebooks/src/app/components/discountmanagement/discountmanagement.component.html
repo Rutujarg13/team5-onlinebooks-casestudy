@@ -3,7 +3,7 @@
 <h6 class="mb-3">Add Book Discount</h6>
 <form #discountForm="ngForm" class="form-inline" (ngSubmit)="addDiscount(discountForm)">
   <div class="form-control">
-  <div class="row">
+  <div class="row pt-2">
   <div class="col-md-4">
   <label for="book">Book</label>
   <div class="input-group">
@@ -21,7 +21,7 @@
     </div>
   </div>
 </div>
-  <div class="row pt-4">
+  <div class="row pt-3">
   <div class="col-md-3">
     <label for="startDate">Start Date</label>
     <div class="input-group">
@@ -47,11 +47,10 @@
     </div>
   </div>
   </div>
-  <div class="row">
-  <div>
-    <label></label>
+  <div class="row pt-3 pb-2">
+    <div class="col-md-4">
   <div class="input-group ">
-  <button type="submit" style="width: 10%;" class="btn btn-primary" [disabled]="!discountForm.valid">Add</button>
+  <button type="submit" class="btn btn-primary" [disabled]="!discountForm.valid">Add Discount</button>
 </div>
 </div>
 </div>
@@ -90,7 +89,7 @@
 </div>
 <p class="text-danger">{{categoryErrorMsg}}</p> -->
 
-<hr/>
+<hr class="mt-5"/>
 
 <div>
     <h6 class="mt-5">Discounts History</h6>
