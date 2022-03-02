@@ -66,44 +66,6 @@ router.post("/add/", (req, res) => {
   );
 });
 
-// router.post("/add/", (req, res) => {
-//   const {
-//     title,
-//     publisher_id,
-//     price,
-//     quantity,
-//     description,
-//     category_id,
-//     cover,
-//     cover_img,
-//     authors,
-//   } = req.body;
-//   var bookId;
-//   const connection = db;
-//   connection.query(
-//     "INSERT INTO books (title, publisher_id, price, quantity, description, category_id, cover, cover_img) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING book_id",
-//     [
-//       title,
-//       publisher_id,
-//       price,
-//       quantity,
-//       description,
-//       category_id,
-//       cover,
-//       cover_img,
-//     ],
-//     (error, result) => {
-//       if (error) {
-//         console.log(error);
-//         res.status(500).send("Internal Error on Server");
-//       } else {
-//         bookId = result.rows[0].book_id;
-//         result = insertBookAuthor(authors, bookId, res);
-//       }
-//     }
-//   );
-// });
-
 //Edit book
 router.put("/edit/", (req, res) => {
   const {
@@ -300,21 +262,5 @@ router.delete("/deletebookauthor/", (req, res) => {
     }
   );
 });
-
-// Check that the row exists
-// pool.query(
-//   "SELECT EXISTS(SELECT * FROM books WHERE book_id=1)",
-//   (error, result) => {
-//     if (error) {
-//       res.send("errror");
-//     } else {
-//       res.send(result.rows[0].exists);
-//     }
-//   }
-// );
-
-// TRUNCATE authors RESTART IDENTITY CASCADE;
-// TRUNCATE books_authors RESTART IDENTITY CASCADE;
-// TRUNCATE books RESTART IDENTITY CASCADE;
 
 module.exports = router;

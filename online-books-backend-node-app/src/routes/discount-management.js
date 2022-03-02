@@ -64,7 +64,7 @@ function getDiscounts(req, res) {
   return new Promise((resolve, reject) => {
     const connection = db;
     connection.query(
-      "SELECT * FROM product_discounts JOIN books on product_discounts.book_id=books.book_id JOIN publishers on books.publisher_id = publishers.publisher_id JOIN book_categories ON books.category_id = book_categories.category_id",
+      "SELECT * FROM product_discounts JOIN books on product_discounts.book_id=books.book_id JOIN publishers on books.publisher_id = publishers.publisher_id JOIN book_categories ON books.category_id = book_categories.category_id ORDER BY is_active DESC, start_stamp",
       (error, result) => {
         if (error) {
           return res.status(500).send("Internal Error on Server");

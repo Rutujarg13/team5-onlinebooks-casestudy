@@ -13,6 +13,7 @@ import { DiscountmanagementComponent } from './components/discountmanagement/dis
 import { AdminComponent } from './components/admin/admin.component';
 import { SearchComponent } from './components/search/search.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { DiscountListComponent } from './components/discount-list/discount-list.component';
  
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     ProductmanagementComponent,
     DiscountmanagementComponent,
     AdminComponent,
-    SearchComponent
+    SearchComponent,
+    DiscountListComponent
   ],
   imports: [
     BrowserModule,

@@ -54,8 +54,6 @@ export class DiscountmanagementComponent implements OnInit {
     .subscribe((response:any)=>{
       this.discounts=response;
     });
-
-
   }
 
   addDiscount(){
@@ -74,25 +72,6 @@ export class DiscountmanagementComponent implements OnInit {
   }
 }
 
-  updateDiscount(bookId:any){
-    bookId=parseInt(bookId)
-    this.discountManagementService.editDiscount(bookId, this.updatedDiscount)
-    .subscribe((response:any)=>{
-      this.getDiscounts();
-    })
-  }
-  
-  changeDiscount(e:any){
-    this.updatedDiscount=e.target.value;
-  }
-  
-  deleteDiscount(bookId:any){
-    bookId=parseInt(bookId);
-    this.discountManagementService.deleteDiscount(bookId)
-    .subscribe((Response:any)=>{
-      this.getDiscounts();
-    })
-  }
 
   transformFilter(e:any){
     this.filter=e.target.value.toLowerCase();
