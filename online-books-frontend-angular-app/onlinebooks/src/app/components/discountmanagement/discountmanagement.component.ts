@@ -58,8 +58,9 @@ export class DiscountmanagementComponent implements OnInit {
 
   }
 
-  addDiscount(){
-
+  addDiscount(form:any){
+    console.log(form.value.discount);
+    console.log('submittef');
   };
 
   transformFilter(x:any){
