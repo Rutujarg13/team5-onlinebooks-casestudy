@@ -5,17 +5,7 @@ const Pool = require("pg").Pool;
 const db = require("../db/connection");
 
 router.get("/", (req, res) => {
-  const connection = db;
-  connection.query(
-    "SELECT * FROM product_discounts JOIN books on product_discounts.book_id=books.book_id JOIN publishers on books.publisher_id = publishers.publisher_id JOIN book_categories ON books.category_id = book_categories.category_id",
-    (error, result) => {
-      if (error) {
-        return res.status(500).send("Internal Error on Server");
-      } else {
-        return res.status(200).json(result.rows);
-      }
-    }
-  );
+  updateStatus(req, res).then(getDiscounts(req, res));
 });
 
 router.post("/add/", (req, res) => {
@@ -69,5 +59,36 @@ router.delete("/delete/:id", (req, res) => {
     }
   );
 });
+
+function getDiscounts(req, res) {
+  return new Promise((resolve, reject) => {
+    const connection = db;
+    connection.query(
+      "SELECT * FROM product_discounts JOIN books on product_discounts.book_id=books.book_id JOIN publishers on books.publisher_id = publishers.publisher_id JOIN book_categories ON books.category_id = book_categories.category_id",
+      (error, result) => {
+        if (error) {
+          return res.status(500).send("Internal Error on Server");
+        } else {
+          return res.status(200).json(result.rows);
+        }
+      }
+    );
+  });
+}
+
+function updateStatus(req, res) {
+  return new Promise((resolve, reject) => {
+    const connection = db;
+    connection.query(
+      `WITH active AS (UPDATE product_discounts SET is_active=true WHERE start_stamp < CURRENT_TIMESTAMP AND CURRENT_TIMESTAMP< end_stamp )
+      UPDATE product_discounts SET is_active=false WHERE start_stamp > CURRENT_TIMESTAMP OR CURRENT_TIMESTAMP > end_stamp`,
+      (error, result) => {
+        if (error) {
+          return res.status(500).send("Internal Error on Server");
+        }
+      }
+    );
+  });
+}
 
 module.exports = router;
