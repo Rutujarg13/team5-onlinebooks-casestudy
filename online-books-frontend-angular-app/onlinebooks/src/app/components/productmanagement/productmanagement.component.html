@@ -1,5 +1,6 @@
+<app-admin-nav></app-admin-nav>
 <div class="container">
-    <div>
+    <div class="mt-3">
 <h6 class="mb-3">Add New Book</h6>
 <form class="form-inline" #newBookForm="ngForm"  (ngSubmit)="newBook(newBookForm)">
   <div class="form-control">
@@ -15,7 +16,7 @@
 <div class="col-md-4">
   <label for="author">Author</label>
   <div class="input-group">
-    <input type="text" id="author" class="form-control" ngModel name="selectedAuthor" #selectedAuthor="ngModel" (ngModelChange)="getAuthorId()" matInput [matAutocomplete]="auto1" placeholder="Author" required>
+    <input type="text" id="author" class="form-control" ngModel name="selectedAuthor" #selectedAuthor="ngModel" matInput [matAutocomplete]="auto1" placeholder="Author" required>
         <mat-autocomplete #auto1="matAutocomplete">
           <mat-option *ngFor="let author of authors" [value]="author.first_name+' '+author.last_name">
             {{author.first_name}} {{author.last_name}}
@@ -26,7 +27,7 @@
 <div class="col-md-4">
   <label for="publisher">Publisher</label>
   <div class="input-group">
-    <input type="text" id="publisher" class="form-control" ngModel name="selectedPublisher"  #selectedPublisher="ngModel" (ngModelChange)="getPublisherId()"  matInput [matAutocomplete]="auto2" placeholder="Publisher" required>
+    <input type="text" id="publisher" class="form-control" ngModel name="selectedPublisher"  #selectedPublisher="ngModel"  matInput [matAutocomplete]="auto2" placeholder="Publisher" required>
     <mat-autocomplete #auto2="matAutocomplete">
       <mat-option *ngFor="let publisher of publishers" [value]="publisher.publisher_name">
         {{publisher.publisher_name}}
@@ -37,7 +38,7 @@
   <div class="col-md-4">
     <label for="category">Category</label>
     <div class="input-group">
-    <input type="text" id="category" class="form-control" ngModel  name="selectedCategory"  #selectedCategory="ngModel" (ngModelChange)="getCategoryId()" matInput [matAutocomplete]="auto3" placeholder="Category" required>
+    <input type="text" id="category" class="form-control" ngModel  name="selectedCategory"  #selectedCategory="ngModel" matInput [matAutocomplete]="auto3" placeholder="Category" required>
         <mat-autocomplete #auto3="matAutocomplete">
           <mat-option *ngFor="let category of categories" [value]="category.category_name">
             {{category.category_name}}
@@ -59,13 +60,13 @@
     <label for="price">Price</label>
     <div class="input-group">
     <div class="input-group-prepend"><div class="input-group-text">₹</div></div>
-    <input type="number" id="price" class="form-control" ngModel  name="price" #price="ngModel"  placeholder="0.00"  required>
+    <input type="number" min="0" id="price" class="form-control" ngModel  name="price" #price="ngModel"  placeholder="0.00"  required>
   </div>
 </div>
 <div class="col-md-4">
   <label for="quantity">Quantity</label>
     <div class="input-group">
-    <input type="text" id="quantity" class="form-control" ngModel name="quantity" #quantity="ngModel" placeholder="Quantity" required> 
+    <input type="number" min="0" id="quantity" class="form-control" ngModel name="quantity" #quantity="ngModel" placeholder="Quantity" required> 
   </div>
   </div>
   </div>

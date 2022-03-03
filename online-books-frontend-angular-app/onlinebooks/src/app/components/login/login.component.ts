@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,12 +10,17 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 authService : AuthService;
+activatedRoute:ActivatedRoute;
+router: Router;
 email:string='';
 password:string='';
-errorMsg:string='';
+errorMsg:string=''; 
 
-  constructor(service:AuthService) { 
+
+  constructor(service:AuthService, activatedRoute:ActivatedRoute, router:Router) { 
     this.authService = service;
+    this.activatedRoute=activatedRoute;
+    this.router = router;
   }
 
   ngOnInit(): void {
@@ -25,14 +32,22 @@ errorMsg:string='';
     .subscribe((response :any)=>{
       if(response.status=='error'){
         this.errorMsg='Invalid Credentials';
+        return false;
       }
       else{
         this.errorMsg='';
+        localStorage.setItem('token', response.data);
+        let user = this.authService.getCurrentUser();
+        if(user.admin==true){
+          this.router.navigate(['/admin/products']);
+        }
+        else{
+          this.router.navigate(['/']);
+        }
+        return true;
       }
-      console.log(response);
     }, (error)=>{
-      console.log(error);
-      
+      return false;
     });
   }
 }

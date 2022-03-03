@@ -5,6 +5,7 @@ const authenticationRoute = require("./routes/auth");
 const express = require("express");
 const body_parser = require("body-parser");
 const app = express();
+app.use(express.json());
 app.use(body_parser.json());
 app.use((req, res, next) => {
   console.log("within cors configuration middleware");

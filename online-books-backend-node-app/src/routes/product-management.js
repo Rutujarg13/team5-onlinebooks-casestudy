@@ -8,7 +8,7 @@ const db = require("../db/connection");
 router.get("/", (req, res) => {
   const connection = db;
   connection.query(
-    "SELECT * FROM books JOIN publishers on books.publisher_id = publishers.publisher_id JOIN book_categories ON books.category_id = book_categories.category_id;",
+    "SELECT * FROM books JOIN publishers on books.publisher_id = publishers.publisher_id JOIN book_categories ON books.category_id = book_categories.category_id ORDER BY books.book_id;",
     (error, result) => {
       if (error) {
         return res.status(500).send("Internal Error on Server");

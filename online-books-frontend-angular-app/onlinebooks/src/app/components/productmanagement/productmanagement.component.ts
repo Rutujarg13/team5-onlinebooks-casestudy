@@ -156,7 +156,7 @@ addAuthor(firstName:string, lastName:string){
   }
   let response = this.productManagementService.addAuthor(author);
     return(response);
-  }
+}
   
   //add publisher
   addPublisher(publisherName:string){
@@ -174,88 +174,70 @@ addAuthor(firstName:string, lastName:string){
   }
 
 
-newBook(e:any){
-  let price = e.target.price.value;
-  // let quantity = e.target.quantity.value;
-  let description = e.target.description.value;
-  if(this.selectedAuthorId==-1){
-    this.selectedAuthorId = this.addAuthor(this.selectedAuthorFirstName, this.selectedAuthorLastName);
-  }
-
-  if(this.selectedCategoryId==-1){
-    console.log(this.selectedCategory);
-    this.selectedCategoryId = this.addCategory(this.selectedCategory);
-  }
-  if(this.selectedPublisherId==-1){
-    this.selectedPublisherId = this.addPublisher(this.selectedPublisher);
-  }
+newBook(form:any){
+  let title:string = form.value.newTitle;
+  let authorId = this.getAuthorId(form.value.selectedAuthor);
+  let categoryId = this.getCategoryId(form.value.selectedCategory);
+  let publisherId = this.getPublisherId(form.value.selectedPublisher);
+  let price = form.value.price;
+  let quantity = form.value.quantity;
+  let description = form.value.description;
+  let cover = form.value.cover;
   let book ={      
-        "title":this.newTitle,
-          "publisher_id": this.selectedPublisherId,
+        "title":title,
+          "publisher_id": publisherId,
           "price": price,
-          "quantity": this.quantity,
+          "quantity": quantity,
           "description":description,
-          "category_id":this.selectedCategoryId,
-          // "cover":this.cover,
-          "cover":"cover.jpg",
-          "authors":[this.selectedAuthorId]
+          "category_id":categoryId,
+          "cover":cover,
+          "authors":[authorId]
         };
         this.addBook(book);
-        this.selectedCategory='';
-        this.selectedAuthor='';
-        this.selectedPublisher='';
-        this.cover='';
-        this.selectedCategoryId=-1;
-        this.selectedAuthorId=1;
-        this.selectedPublisherId=-1;
-        this.newTitle='';
-        this.quantity=undefined;
-        this.description = '';
-        this.price=undefined;
-        
+        form.resetForm();
 }
 
-getAuthorId(){
-  console.log(this.selectedAuthor);
-  let name = this.selectedAuthor.split(" ");
-  this.selectedAuthorFirstName = name[0];
-  this.selectedAuthorLastName = name[name.length-1];
+getAuthorId(authorName:string){
+  let name = authorName.split(" ");
+  let firstName = name[0];
+  let lastName = name[name.length-1];
   let idFound = false;
+  let authorId:any=-1;
   this.authors.forEach((a)=>{
-    if(a.first_name==this.selectedAuthorFirstName && a.last_name== this.selectedAuthorLastName){
-      this.selectedAuthorId=a.author_id;
-      idFound=true;
+    if(a.first_name==firstName && a.last_name== lastName){
+      authorId=a.author_id;
     }
   })
-  if(!idFound){
-    this.selectedAuthorId = -1;
+  if(authorId==-1){
+    authorId=this.addAuthor(firstName, lastName);
   }
+    return authorId;
 }
 
-getPublisherId(){
-  let idFound = false;
+getPublisherId(publisherName:string){
+  let publisherId:any=-1;
   this.publishers.forEach((p)=>{
-    if(p.publisher_name==this.selectedPublisher){
-      this.selectedPublisherId=p.publisher_id;
-      idFound=true;
+    if(p.publisher_name==publisherName){
+      publisherId=p.publisher_id;
     }
   })
-  if(!idFound){
-    this.selectedPublisherId = -1;
+  if(publisherId==-1){
+    publisherId=this.addPublisher(publisherName);
   }
+  return publisherId;
 }
 
-getCategoryId(){
-  let idFound = false;
+getCategoryId(selectedCategory:string){
+  let categoryId:any = -1;
   this.categories.forEach((c)=>{
-    if(c.category_name==this.selectedCategory){
-      this.selectedCategoryId=c.category_id;
-      idFound=true;
+    if(c.category_name==selectedCategory){
+      categoryId=c.category_id;
     }
   })
-  if(!idFound){
-    this.selectedCategoryId = -1;
+  if(categoryId==-1){
+    categoryId = this.addCategory(selectedCategory);
   }
+  return categoryId;
 }
 
 
