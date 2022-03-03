@@ -23,7 +23,6 @@ import { ProductComponent } from './product/product.component';
 import { ApiService } from './services/api.service';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { HomeComponent } from './home/home.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { HighpriceComponent } from './sortby/highprice/highprice.component';
@@ -33,11 +32,12 @@ import { CategoryComponent } from './category/category.component';
 import { CategorylistComponent } from './categorylist/categorylist.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 const routes:Routes= [
   {path: 'login', component: LoginComponent},
   {path: 'admin/products', component: ProductmanagementComponent, canActivate:[AuthGuardService, AdminAuthGuardService]},
-  {path:'admin/discounts', component:DiscountmanagementComponent, canActivate:[AuthGuardService, AdminAuthGuardService]}
+  {path:'admin/discounts', component:DiscountmanagementComponent, canActivate:[AuthGuardService, AdminAuthGuardService]},
   {path: 'home' , component: ProductComponent},
   {path: 'product', component: ProductComponent},
   {path: 'product/:id', component: ProductDetailsComponent},

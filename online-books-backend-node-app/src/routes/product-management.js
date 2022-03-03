@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const body_parser = require("body-parser");
+const bodyParser = require("body-parser");
 const Pool = require("pg").Pool;
 const db = require("../db/connection");
 
