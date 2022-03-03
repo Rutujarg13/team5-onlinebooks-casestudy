@@ -1,0 +1,12 @@
+<h1>Books By Category...</h1>
+
+  
+      <div style="display: inline-block;padding:20px;" *ngFor="let category of categoryList">
+      <div class="card border-primary mb-3" style="max-width: 18rem;">
+        
+        <div class="card-body text-primary">
+          <h2 class="card-title"><a [routerLink]="['/category',category.category_id]">{{category.category_name}}</a></h2>  
+        </div>
+      </div>
+      </div>
+
