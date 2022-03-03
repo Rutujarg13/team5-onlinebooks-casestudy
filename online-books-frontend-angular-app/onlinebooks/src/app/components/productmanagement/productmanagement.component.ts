@@ -17,22 +17,7 @@ export class ProductmanagementComponent implements OnInit {
   booksAuthors:any[]=[];
   categories:any[]=[];
   filter:string='';
-  bookId:any;
   bookAuthors:any[]=[];
-  selectedCategory:any;
-  selectedAuthor:any;
-  selectedPublisher:any;
-  price:any;
-  quantity:any;
-  img:any;
-  cover:any;
-  selectedCategoryId:any;
-  selectedAuthorId:any;
-  selectedPublisherId:any;
-  newTitle:string='';
-  selectedAuthorFirstName:string='';
-  selectedAuthorLastName:string='';
-  description:string='';
 
   constructor(service: PoductmanagementService, http:HttpClient) {
     this.productManagementService = service;
@@ -245,10 +230,10 @@ transformFilter(e:any){
   this.filter=e.target.value.toLowerCase();
 }
 
-uploadFile(e:any){
-  this.img = e.target.files[0];
-  this.cover = e.target.files[0].name;
-  }
+// uploadFile(e:any){
+//   this.img = e.target.files[0];
+//   this.cover = e.target.files[0].name;
+//   }
   
 
 }

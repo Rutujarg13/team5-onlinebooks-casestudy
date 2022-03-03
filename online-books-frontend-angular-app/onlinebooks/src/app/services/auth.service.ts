@@ -28,6 +28,6 @@ export class AuthService {
 
    public adminSignOut(){
      localStorage.removeItem('token');
-    this.router.navigate(['/admin/login']);
+    this.router.navigate(['/login']);
    }
 }

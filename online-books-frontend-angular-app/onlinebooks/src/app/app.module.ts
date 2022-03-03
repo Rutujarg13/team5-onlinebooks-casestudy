@@ -14,7 +14,6 @@ import { DiscountmanagementComponent } from './components/discountmanagement/dis
 import { AdminComponent } from './components/admin/admin.component';
 import { SearchComponent } from './components/search/search.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DiscountListComponent } from './components/discount-list/discount-list.component';
 import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AdminAuthGuardService } from './services/admin-auth-guard.service';
@@ -34,8 +33,7 @@ const routes:Routes= [
     DiscountmanagementComponent,
     AdminComponent,
     SearchComponent,
-    DiscountListComponent,
-    AdminNavComponent
+    AdminNavComponent,
   ],
   imports: [
     BrowserModule,
