@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DiscountmanagementService } from 'src/app/services/discountmanagement.service';
 import { PoductmanagementService } from 'src/app/services/poductmanagement.service';
+import { Book } from 'src/app//modules/book';
+import { Category } from 'src/app//modules/category';
 
 @Component({
   selector: 'app-category-discount',
@@ -13,8 +15,8 @@ export class CategoryDiscountComponent implements OnInit {
   productManagementService: PoductmanagementService;
   minDate = new Date().toISOString().split('T')[0];
   discounts:any[] = [];
-  books:any[] = [];
-  categories:any[]=[];
+  books:Book[] = [];
+  categories:Category[]=[];
   booksAuthors:any[]=[];
   filter:string='';
   discountForm:any;
