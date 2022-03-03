@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <form class="form-horizontal">
+      <div class="form-control p-5">
+        <div class="row">
+          <p class="text-danger offset-md-3">{{ errorMsg }}</p>
+        </div>
+        <div class="row mb-2">
+        <label class="mb-2" for="email">Email:</label>
+        <div class="">
+          <input type="email" [(ngModel)]="email" class="form-control mb-2" id="email" placeholder="Enter email" name="email" required>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label class="mb-2" for="password">Password:</label>
+        <div class="">          
+          <input type="password" [(ngModel)]="password" class="form-control mb-2" id="password" placeholder="Enter password" name="pwd" required>
+        </div>
+      </div>
+      <div class="row">        
+        <div class="offset-md-3">
+          <button type="submit" class="btn btn-primary mt-2 w-50" (click)="validate()">Submit</button>
+        </div>
+      </div>
+    </div>
+    </form>
+    
+</div>
+</div>
+  

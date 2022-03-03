@@ -1,0 +1,13 @@
+<app-admin-nav></app-admin-nav>
+<div class="container">
+  <ul class="nav nav-tabs justify-content-center mt-5 mb-5">
+    <li [class.active]="viewMode == 'discountHistory'"><a  class="nav-link text-secondary" (click)="viewMode = 'discountHistory'">Discounts History</a></li>
+    <li [class.active]="viewMode == 'bookDiscount'"><a  class="nav-link text-secondary" (click)="viewMode = 'bookDiscount'">Apply Discount to Selected Book</a></li>
+    <li [class.active]="viewMode == 'categoryDiscount'"><a class="nav-link text-secondary" (click)="viewMode = 'categoryDiscount'">Apply Discount to Selected Category of Books</a></li>
+</ul>
+<div [ngSwitch]="viewMode">
+  <div *ngSwitchCase="'discountHistory'"><app-discount-history></app-discount-history></div>
+<div *ngSwitchCase="'bookDiscount'"><app-book-discount></app-book-discount></div>
+<div *ngSwitchCase="'categoryDiscount'"><app-category-discount></app-category-discount></div>
+</div>
+</div>

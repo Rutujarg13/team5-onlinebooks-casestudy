@@ -1,24 +1,14 @@
+const productManagementRoute = require("./routes/product-management");
+const discountManagementRoute = require("./routes/discount-management");
+const authenticationRoute = require("./routes/auth");
+
 const express = require("express");
-const bodyParser = require("body-parser");
-// import route in app.js
-
-const productRoute = require("./routes/product");
-
-
-// creating Web server
 const app = express();
-
-// for every incoming request, bodyParser will parse data from bytes into JSON object &
-// vice-versa for every reponse JSON into bytes. Works with POST and PUT/PATCH
+app.use(body_parser.json());
+const bodyParser = require("body-parser");
+const productRoute = require("./routes/product");
 app.use(express.json());
 
-// custom middleware
-/*app.use((req, res, next) => {
-  console.log("Incoming Request Middleware" + req.body);
-  next();
-}); */
-
-// middleaware - to enable cors at server-side
 app.use((req, res, next) => {
   console.log("within cors configuration middleware");
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -26,7 +16,10 @@ app.use((req, res, next) => {
   "Access-Control-Allow-Headers",
   "Origin, X-Requested-With, Content-Type, Accept"
   );
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, DELETE, PUT, OPTIONS"
+  );
   next();
   });
 

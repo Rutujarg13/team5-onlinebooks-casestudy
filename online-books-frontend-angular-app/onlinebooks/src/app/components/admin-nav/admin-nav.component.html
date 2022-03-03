@@ -1,0 +1,7 @@
+<nav class="navbar navbar-expand-sm bg-light">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" [routerLink]="['/admin/products']">Products</a></li>
+            <li class="nav-item"><a class="nav-link" [routerLink]="['/admin/discounts']">Discounts</a></li>
+                    <li class="nav-item"><a class="nav-link" (click)="authService.adminSignOut()">Sign Out</a></li>
+                </ul></div></nav>

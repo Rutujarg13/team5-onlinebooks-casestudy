@@ -1,0 +1,137 @@
+<app-admin-nav></app-admin-nav>
+<div class="container">
+<div class="book-discount"></div>
+
+
+
+    <div class="mt-3">
+<h6 class="mb-3">Add New Book</h6>
+<form class="form-inline" #newBookForm="ngForm"  (ngSubmit)="newBook(newBookForm)">
+  <div class="form-control">
+    <div class="row pt-2">
+      <div class="col-md-8">
+        <label for="title">Book</label>
+    <div class="input-group">
+    <input type="text" minlength="1" class="form-control" id="title" ngModel name="newTitle" #newTitle="ngModel"  placeholder="Title" required>
+</div>
+</div>
+    </div>
+    <div class="row">
+<div class="row pt-2">
+<div class="col-md-8">
+  <label for="author">Author</label>
+  <div class="input-group" id="author-input-goup">
+    <input type="text" id="author" class="form-control" ngModel name="author" #author="ngModel" placeholder="Author1, Author2, Author3, etc." required>        
+  </div>
+</div>
+</div>
+<div class="col-md-4">
+  <label for="publisher">Publisher</label>
+  <div class="input-group">
+    <input type="text" id="publisher" class="form-control" ngModel name="selectedPublisher"  #selectedPublisher="ngModel"  matInput [matAutocomplete]="auto2" placeholder="Publisher" required>
+    <mat-autocomplete #auto2="matAutocomplete">
+      <mat-option *ngFor="let publisher of publishers" [value]="publisher.publisher_name">
+        {{publisher.publisher_name}}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+</div>
+  <div class="col-md-4">
+    <label for="category">Category</label>
+    <div class="input-group">
+    <input type="text" id="category" class="form-control" ngModel  name="selectedCategory"  #selectedCategory="ngModel" matInput [matAutocomplete]="auto3" placeholder="Category" required>
+        <mat-autocomplete #auto3="matAutocomplete">
+          <mat-option *ngFor="let category of categories" [value]="category.category_name">
+            {{category.category_name}}
+          </mat-option>
+        </mat-autocomplete>
+  </div>
+  </div>
+</div>
+<div class="row pt-2">
+  <div class="col-md-8">
+    <label for="cover">Cover Image URL</label>
+      <div class="input-group">
+        <input type="text" minlength="10" class="form-control" id="cover" ngModel name="cover" #cover="ngModel"  placeholder="Cover Image URL" required>
+      </div>
+  </div>
+</div>
+<div class="row pt-2">
+  <div class="col-md-4">
+    <label for="price">Price</label>
+    <div class="input-group">
+    <div class="input-group-prepend"><div class="input-group-text">₹</div></div>
+    <input type="number" min="0" id="price" class="form-control" ngModel  name="price" #price="ngModel"  placeholder="0.00"  required>
+  </div>
+</div>
+<div class="col-md-4">
+  <label for="quantity">Quantity</label>
+    <div class="input-group">
+    <input type="number" min="0" id="quantity" class="form-control" ngModel name="quantity" #quantity="ngModel" placeholder="Quantity" required> 
+  </div>
+  </div>
+  </div>
+<div class="row pt-2">
+  <div class="col-md-12">
+    <label for="description">Description</label>
+      <div class="input-group">
+    <textarea cols="30" rows="5" id="description" class="form-control" ngModel name="description" #description="ngModel" placeholder="Add Description Here"  required></textarea>
+  </div>
+  </div>
+</div>
+  <div class="row pt-3 pb-2">
+    <div class="col-md-4">
+  <div class="input-group ">
+  <button type="submit" class="btn btn-primary" [disabled]="!newBookForm.valid">Add Book</button>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+
+
+
+
+<hr class="mt-5"/>
+<div>
+    <h6 class="mt-5">List of Books</h6>
+    <input type="text" class="form-control mt-3 mb-4" [value]="filter" id="search" (keyup)="transformFilter($event)" placeholder="Search Titles">
+</div>
+<div class="pb-5">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" class="col-sm-3">Title</th>
+            <th scope="col" class="col-sm-3">Author</th>
+            <th scope="col-sm-3">Publisher</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let book of bookList">
+            <ng-container *ngIf="book.title.toLowerCase().includes(filter)">
+            <td>{{book.title}}</td>
+            <table>
+            <tr *ngFor="let author of booksAuthors">
+              <td *ngIf="author.book_id===book.book_id">{{author.first_name}} {{author.last_name}}</td>
+            </tr>
+          </table>
+            <td>{{book.publisher_name}}</td>
+            <td>{{book.category_name}}</td>
+            <!-- On change update price -->
+            <td class="col-md-2"><input style="width:80%" type="number" [(ngModel)]="book.price" [ngModelOptions]="{standalone: true}" (change)="editBook(book)"></td>
+            <!-- On change update quantity -->
+            <td class="col-md1"><input type="number" style="width:80%" [(ngModel)]="book.quantity" [ngModelOptions]="{standalone: true}" (change)="editBook(book)"></td>
+            <!-- <td><button class="btn btn-warning">Update</button></td> -->
+            <td><button class="btn btn-danger" (click)="deleteBook(book.book_id)">Delete</button></td>
+          </ng-container>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+</div>

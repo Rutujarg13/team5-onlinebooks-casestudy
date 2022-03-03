@@ -7,13 +7,16 @@ const db = require("../db/connection");
 //GET ALL BOOKS
 router.get("/", (req, res) => {
   const connection = db;
-  connection.query("SELECT * FROM books", (error, result) => {
-    if (error) {
-      return res.status(500).send("Internal Error on Server");
-    } else {
-      return res.status(200).send(result.rows);
+  connection.query(
+    "SELECT * FROM books JOIN publishers on books.publisher_id = publishers.publisher_id JOIN book_categories ON books.category_id = book_categories.category_id ORDER BY books.book_id;",
+    (error, result) => {
+      if (error) {
+        return res.status(500).send("Internal Error on Server");
+      } else {
+        return res.status(200).send(result.rows);
+      }
     }
-  });
+  );
 });
 
 //DELETE BOOK
@@ -21,14 +24,14 @@ router.delete("/delete/:id", (req, res) => {
   const connection = db;
   const id = parseInt(req.params.id);
   connection.query(
-    "WITH a AS (DELETE FROM books_authors WHERE book_id = $1) DELETE FROM books WHERE book_id=$1",
+    "WITH ba AS (DELETE FROM books_authors WHERE book_id = $1), pd AS(DELETE FROM product_discounts WHERE book_id = $1) DELETE FROM books WHERE book_id=$1",
     [id],
     (error, result) => {
       if (error) {
         console.log(error);
         return res.status(500).send("Internal Server Error");
       } else {
-        return res.status(200).send(`Book with id ${id} has been deleted`);
+        return res.status(200).json(`Book with id ${id} has been deleted`);
       }
     }
   );
@@ -94,7 +97,7 @@ router.put("/edit/", (req, res) => {
       } else {
         res
           .status(201)
-          .send(`Details for book with id ${book_id} has been updated `);
+          .json(`Details for book with id ${book_id} has been updated `);
       }
     }
   );
@@ -113,7 +116,7 @@ function insertBookAuthor(authors, bookId, res) {
       console.log(error);
       res.status(500).send("Internal Error on Server");
     } else {
-      res.status(201).send(`Book added `);
+      res.status(201).json(`Book added `);
     }
   });
 }
@@ -224,6 +227,21 @@ router.get("/bookauthors/:id", (req, res) => {
   );
 });
 
+//Get booksAuthors list
+router.get("/booksauthors/", (req, res) => {
+  const connection = db;
+  connection.query(
+    "SELECT * FROM books_authors JOIN authors on books_authors.author_id = authors.author_id;",
+    (error, result) => {
+      if (error) {
+        return res.status(500).send("Internal Error on Server");
+      } else {
+        return res.status(200).json(result.rows);
+      }
+    }
+  );
+});
+
 //Delete book's author
 router.delete("/deletebookauthor/", (req, res) => {
   const { book_id, author_id } = req.body;
@@ -244,21 +262,5 @@ router.delete("/deletebookauthor/", (req, res) => {
     }
   );
 });
-
-// Check that the row exists
-// pool.query(
-//   "SELECT EXISTS(SELECT * FROM books WHERE book_id=1)",
-//   (error, result) => {
-//     if (error) {
-//       res.send("errror");
-//     } else {
-//       res.send(result.rows[0].exists);
-//     }
-//   }
-// );
-
-// TRUNCATE authors RESTART IDENTITY CASCADE;
-// TRUNCATE books_authors RESTART IDENTITY CASCADE;
-// TRUNCATE books RESTART IDENTITY CASCADE;
 
 module.exports = router;
