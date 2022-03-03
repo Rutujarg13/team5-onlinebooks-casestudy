@@ -1,0 +1,35 @@
+
+<div class="container">
+  <input class="form-control mr-sm-2" type="search"  [(ngModel)]="name" placeholder="Enter title to search"></div>
+  
+<div class="container">
+<div class="row" *ngFor="let product of bookDetails | filter:name">
+    <div class="col-3" style="padding:10px" >
+
+        <div class="card">
+            <img class="card-img-top" src="{{product.cover}}" alt="Card image cap" >
+          
+            <div class="card-body">
+              <a href="#" class="btn btn-primary" style="margin:5px">Add to Cart</a>
+              <a href="#" class="btn btn-primary">Buy Now</a>
+            </div>
+          </div>
+
+
+
+    </div>
+    <div class="col-9" style="padding:10px">
+        <div class="card" >
+            <div class="card-body">
+              <h1 class="card-title">{{product.title | uppercase}}</h1>
+              <h5 class="card-subtitle mb-2 text-muted">Author:{{product.author_name}}</h5>
+              <h2 class="card-text">Price:{{product.price | currency:"INR"}}</h2>
+              <p class="card-text"><strong>Description:</strong>{{product.description | titlecase}}</p>
+              <p class="card-text"><strong>Publisher:</strong>{{product.publisher_name}}</p>
+              <p class="card-text"><strong>Category:</strong>{{product.category_name}}</p>
+              
+            </div>
+          </div>
+    </div>
+</div>
+</div>

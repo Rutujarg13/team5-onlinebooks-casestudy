@@ -1,0 +1,15 @@
+<div class="container">
+  <input class="form-control mr-sm-2" type="search"  [(ngModel)]="name" placeholder="Enter title to search"></div>
+
+<div style="display: inline-block;padding:20px;" *ngFor="let product of  BookPriceLow | filter:name">
+    <div class="card" style="width: 18rem;"  >
+      <img class="card-img-top" src="{{product.cover}}" alt="Card image cap" >
+      <div class="card-body">
+        <h5 class="card-title"><a>Title:{{product.title | uppercase}}</a></h5>
+        <p class="card-text">Description:{{product.description | titlecase}}</p>
+        <p class="card-text">Price:{{product.price | currency:"INR"}}</p>
+        
+        <a href="#" class="btn btn-primary">Add to Cart</a>
+      </div>
+    </div>
+</div>
