@@ -11,12 +11,13 @@ import { PoductmanagementService } from './services/poductmanagement.service';
 import { DiscountmanagementService } from './services/discountmanagement.service';
 import { ProductmanagementComponent } from './components/productmanagement/productmanagement.component';
 import { DiscountmanagementComponent } from './components/discountmanagement/discountmanagement.component';
-import { AdminComponent } from './components/admin/admin.component';
 import { SearchComponent } from './components/search/search.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AdminAuthGuardService } from './services/admin-auth-guard.service';
+import { BookDiscountComponent } from './components/book-discount/book-discount.component';
+import { CategoryDiscountComponent } from './components/category-discount/category-discount.component';
  
 
 const routes:Routes= [
@@ -31,9 +32,10 @@ const routes:Routes= [
     LoginComponent,
     ProductmanagementComponent,
     DiscountmanagementComponent,
-    AdminComponent,
     SearchComponent,
     AdminNavComponent,
+    BookDiscountComponent,
+    CategoryDiscountComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { DiscountmanagementService } from 'src/app/services/discountmanagement.service';
 import { PoductmanagementService } from 'src/app/services/poductmanagement.service';
 
-
 @Component({
-  selector: 'app-discountmanagement',
-  templateUrl: './discountmanagement.component.html',
-  styleUrls: ['./discountmanagement.component.css']
+  selector: 'app-category-discount',
+  templateUrl: './category-discount.component.html',
+  styleUrls: ['./category-discount.component.css']
 })
-export class DiscountmanagementComponent implements OnInit {
+export class CategoryDiscountComponent implements OnInit {
   viewMode = 'categoryDiscount';
   discountManagementService: DiscountmanagementService;
   productManagementService: PoductmanagementService;
@@ -53,8 +52,7 @@ export class DiscountmanagementComponent implements OnInit {
     });
   }
 
-  addDiscount(form:any){
-  let bookId = form.value.bookId;
+  addDiscount(bookId:number, form:any){
   let discount = form.value.discount;
   let startStamp = form.value.startDate + " " + form.value.startTime;
   let endStamp = form.value.endDate + " " + form.value.endTime;
@@ -70,50 +68,24 @@ export class DiscountmanagementComponent implements OnInit {
   this.discountManagementService.addDiscount(newDiscount)
       .subscribe((response:any)=>{
         this.getDiscounts();
-        // this.discount=0;
       },(error:any)=>{
         console.log(error);
       }
       );
-      form.resetForm();
     }
     
-    transformFilter(e:any){
-      this.filter=e.target.value.toLowerCase();
-    }
+transformFilter(e:any){
+  this.filter=e.target.value.toLowerCase();
+}
 
-
-  // updateDiscount(bookId:any){
-  //   bookId=parseInt(bookId)
-  //   this.discountManagementService.editDiscount(bookId, this.updatedDiscount)
-  //   .subscribe((response:any)=>{
-  //     this.getDiscounts();
-  //   })
-  // }
-  
-  // changeDiscount(e:any){
-  //   this.updatedDiscount=e.target.value;
-  // }
-  
-  // deleteDiscount(bookId:any){
-  //   bookId=parseInt(bookId);
-  //   this.discountManagementService.deleteDiscount(bookId)
-  //   .subscribe((Response:any)=>{
-  //     this.getDiscounts();
-  //   })
-  // }
-
-  // addCategoryDiscount(){
-  //   this.books.forEach(book=>{
-  //     if(book.category_id==this.categoryId){
-  //       this.bookId = book.book_id;
-  //       this.addDiscount();
-  //       this.categoryErrorMsg = '';
-  //     }
-  //     else{
-  //       this.categoryErrorMsg='No books in selected category';
-  //     }
-  //   })
-  // }
+  addCategoryDiscount(form:any){
+    let categoryId = form.value.categoryId;
+    this.books.forEach(book=>{
+      if(book.category_id==categoryId){
+        this.addDiscount(book.book_id, form);
+      }
+    })
+     form.resetForm();
+  }
 
 }

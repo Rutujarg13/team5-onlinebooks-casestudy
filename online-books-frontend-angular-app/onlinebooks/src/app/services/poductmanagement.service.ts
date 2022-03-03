@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { SyncRequestClient } from 'ts-sync-request';
+import { Author } from '../modules/author';
+import { Book } from '../modules/book';
+import { Publisher } from '../modules/publisher';
+import { Category } from '../modules/category';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +18,11 @@ export class PoductmanagementService {
   }
 
   public getAllBooks(){
-    return this.http.get("http://localhost:3000/api/admin/products");
+    return this.http.get<Book[]>("http://localhost:3000/api/admin/products");
   }
 
   public getBookAuthors(book:string){
-    return this.http.get(`http://localhost:3000/api/admin/products/bookauthors/${book}`);
+    return this.http.get<Author[]>(`http://localhost:3000/api/admin/products/bookauthors/${book}`);
   }
 
   public getBooksAuthors(){
@@ -26,19 +30,19 @@ export class PoductmanagementService {
   }
 
   public getCategories(){
-    return this.http.get("http://localhost:3000/api/admin/products/categories");
+    return this.http.get<Category[]>("http://localhost:3000/api/admin/products/categories");
   }
 
   public getPublishers(){
-    return this.http.get("http://localhost:3000/api/admin/products/publishers");
+    return this.http.get<Publisher[]>("http://localhost:3000/api/admin/products/publishers");
   }
 
   public getAuthors(){
-    return this.http.get("http://localhost:3000/api/admin/products/authors");
+    return this.http.get<Author[]>("http://localhost:3000/api/admin/products/authors");
   }
 
  public editBook(book_details:any){
-   return this.http.put("http://localhost:3000/api/admin/products/edit", book_details);
+   return this.http.put<Book>("http://localhost:3000/api/admin/products/edit", book_details);
  }
 
  public addBook(book_details:any){

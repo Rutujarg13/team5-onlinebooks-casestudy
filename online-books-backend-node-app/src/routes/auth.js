@@ -32,22 +32,4 @@ router.post("/login", (req, res) => {
   });
 });
 
-//admin login route
-// router.post("/admin/login", (req, res) => {
-//   const { email, password } = req.body;
-//   const connection = db;
-//   const statement = `select * from users where email='${email}' and password = '${password}'`;
-//   connection.query(statement, (error, data) => {
-//     const result = {};
-//     if (data.rows.length != 0 && data.rows[0].is_admin === true) {
-//       result["status"] = "success";
-//       result["data"] = data.rows[0].user_id;
-//     } else {
-//       result["status"] = "error";
-//       result["error"] = error;
-//     }
-//     res.send(result);
-//   });
-// });
-
 module.exports = router;

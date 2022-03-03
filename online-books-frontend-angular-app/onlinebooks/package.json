@@ -23,6 +23,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "bootstrap": "^5.1.3",
     "rxjs": "~7.5.0",
+    "ts-sync-request": "^1.4.1",
     "tslib": "^2.3.0",
     "url-polyfill": "^1.1.12",
     "zone.js": "~0.11.4"

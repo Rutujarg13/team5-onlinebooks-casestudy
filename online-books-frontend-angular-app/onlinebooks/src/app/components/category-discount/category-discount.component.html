@@ -1,0 +1,134 @@
+<div class="mt-3">
+    <h6 class="mb-3">Add Discount to All Books In Selected Category</h6>
+    <form #discountForm="ngForm" class="form-inline" (ngSubmit)="addCategoryDiscount(discountForm)">
+      <div class="form-control">
+      <div class="row pt-2">
+      <div class="col-md-4">
+      <label for="category">Category</label>
+      <div class="input-group">
+        <select class="form-control" id="category" ngModel  name="categoryId"  #categoryId="ngModel" required>
+        <option  hidden>Select Category</option>
+          <option *ngFor="let category of categories" [value]="category.category_id">{{category.category_name}}</option>
+        </select>
+      </div>
+    </div>
+      <div class="col-md-3">
+        <label for="discount">Discount</label>
+        <div class="input-group">
+          <input type="number" min="0" class="form-control" id="discount" ngModel  name="discount"  #discount="ngModel" placeholder="Discount" required>
+          <div class="input-group-apend"><div class="input-group-text">%</div></div>
+        </div>
+      </div>
+    </div>
+      <div class="row pt-3">
+      <div class="col-md-3">
+        <label for="startDate">Start Date</label>
+        <div class="input-group">
+          <input type="date" id="startDate" class="form-control"  ngModel  name="startDate"  #startDate="ngModel" [min]="minDate"   required>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="startTime">Start Time</label>
+        <div class="input-group">
+          <input type="time" id="startTime" class="form-control" ngModel  name="startTime"  #startTime="ngModel"  required>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label for="endDate">End Date</label>
+        <div class="input-group">
+          <input type="date" id="endDate" class="form-control" ngModel  name="endDate"  #endDate="ngModel" [min]="minDate"   required>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <label for="endTime">End Time</label>
+        <div class="input-group">
+          <input type="time" id="endTime" class="form-control"  ngModel  name="endTime"  #endTime="ngModel"  required>
+        </div>
+      </div>
+      </div>
+      <div class="row pt-3 pb-2">
+        <div class="col-md-4">
+      <div class="input-group ">
+      <button type="submit" class="btn btn-primary" [disabled]="!discountForm.valid">Add Discount</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    </form>
+    <div class="alert alert-danger" *ngIf="discount.touched && !discount.valid">Please add the discount value</div>
+    <div class="alert alert-danger" *ngIf="categoryId.touched && !categoryId.valid">Please select the book for which the discount should be applied</div>
+    <div class="alert alert-danger" *ngIf="startDate.touched && !startDate.valid">Please select the start date when the discount will be applied</div>
+    <div class="alert alert-danger" *ngIf="startTime.touched && !startTime.valid">Please select the start time when the discount will be applied</div>
+    <div class="alert alert-danger" *ngIf="endDate.touched && !endDate.valid">Please select the date when the discount will expire</div>
+    <div class="alert alert-danger" *ngIf="endTime.touched && !endTime.valid">Please select the time when the discount will expire</div>
+    <div class="alert alert-danger" *ngIf="endDate.touched && startDate.touched && startDate.value>endDate.value">The start date selected is later than the end date selected</div>
+    <div class="alert alert-danger" *ngIf="startTime.touched && endTime.touched && endDate.touched && startDate.touched && startDate.value==endDate.value && startTime.value>endTime.value">The start time selected is later than the end time selected</div>
+    
+    
+    </div>
+    <hr class="mt-5"/>
+    <div>
+        <h6 class="mt-5">Discounts History</h6>
+        <!-- <app-search></app-search> -->
+        <input type="text" class="form-control mt-3 mb-4" [value]="filter" id="search" (keyup)="transformFilter($event)" placeholder="Search Titles">
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+        
+              <tr *ngFor="let book of discounts">
+                <ng-container *ngIf="book.title.toLowerCase().includes(filter)">
+                <td>{{book.title}}</td>
+                <table>
+                <tr *ngFor="let author of booksAuthors"> 
+                 <td *ngIf="author.book_id===book.book_id">{{author.first_name}} {{author.last_name}}</td>
+             </tr>
+              </table>
+                <td>{{book.publisher_name}}</td>
+                <td>{{book.category_name}}</td>
+                <td>{{book.price | currency:'INR'}}</td>
+                <td>{{book.discount}}%</td>
+                <td>{{book.start_stamp | date:'short'}}</td>
+                <td>{{book.end_stamp | date:'short'}}</td>
+                <td *ngIf="book.is_active==true">Active</td>
+                <td *ngIf="book.is_active==false">Not Active</td>
+              </ng-container>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+
+
+
+<!--
+<div class="mt-4">
+<h6 class="mb-3">Category Discount</h6>
+<form class="form-inline" action="/action_page.php">
+    <div class="input-group ">
+  <div class="form-group">
+    <select class="form-control" id="category" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
+    <option  hidden>Select Category</option>
+      <option *ngFor="let category of categories" [value]="category.category_id">{{category.category_name}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="number" class="form-control" id="discount" [(ngModel)]="discount" [ngModelOptions]="{standalone: true}" placeholder="Discount %" required>
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="addCategoryDiscount()">Add</button>
+</div>
+</form>
+</div>
+<p class="text-danger">{{categoryErrorMsg}}</p> -->

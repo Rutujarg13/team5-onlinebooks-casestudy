@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PoductmanagementService } from 'src/app/services/poductmanagement.service';
-import { HttpClient } from '@angular/common/http';
 import { NgIf } from '@angular/common';
 
 @Component({
@@ -9,7 +8,6 @@ import { NgIf } from '@angular/common';
   styleUrls: ['./productmanagement.component.css']
 })
 export class ProductmanagementComponent implements OnInit {
-  http: HttpClient;
   productManagementService: PoductmanagementService;
   bookList:any[]=[];
   publishers:any[]=[];
@@ -18,10 +16,10 @@ export class ProductmanagementComponent implements OnInit {
   categories:any[]=[];
   filter:string='';
   bookAuthors:any[]=[];
+  authorsIds:any[]=[];
 
-  constructor(service: PoductmanagementService, http:HttpClient) {
+  constructor(service: PoductmanagementService) {
     this.productManagementService = service;
-    this.http = http;
    }
 
   ngOnInit(): void {
@@ -36,9 +34,6 @@ getAllBooks(){
   this.productManagementService.getAllBooks()
     .subscribe((response:any)=>{
       this.bookList = response;
-      // this.bookList.forEach((book)=>{
-        // book.cover_img = book.cover_img.data.toString();
-      // });
     }
     );
 }
@@ -112,27 +107,6 @@ addBook(book:any){
     });
   }
 
-// addBook(){
-//   let book ={      
-//     "title":"Hobbit",
-//       "publisher_id": 1,
-//       "price":7.99,
-//       "quantity":80,
-//       "description":"Hobbit Book Description",
-//       "category_id":1,
-//       "cover":this.cover,
-//       "cover_img":this.img,
-//       "authors":[1]
-//     };
-//     this.productManagementService.addBook(book)
-//     .subscribe((response:any)=>{
-//       console.log("Book Added");
-//       console.log(response);
-//     });
-//   }
-
-
-
 //add author
 addAuthor(firstName:string, lastName:string){
   let author = {
@@ -161,25 +135,13 @@ addAuthor(firstName:string, lastName:string){
 
 newBook(form:any){
   let title:string = form.value.newTitle;
-  let authorId = this.getAuthorId(form.value.selectedAuthor);
-  let categoryId = this.getCategoryId(form.value.selectedCategory);
-  let publisherId = this.getPublisherId(form.value.selectedPublisher);
-  let price = form.value.price;
-  let quantity = form.value.quantity;
-  let description = form.value.description;
-  let cover = form.value.cover;
-  let book ={      
-        "title":title,
-          "publisher_id": publisherId,
-          "price": price,
-          "quantity": quantity,
-          "description":description,
-          "category_id":categoryId,
-          "cover":cover,
-          "authors":[authorId]
-        };
-        this.addBook(book);
-        form.resetForm();
+  let authorsInput = form.value.author;
+  let authors = authorsInput.split(',');
+  authors.forEach((author:string)=>{
+    this.getAuthorId(author);
+  });
+  this.authorsIds=[]
+  console.log(this.authorsIds);
 }
 
 getAuthorId(authorName:string){
@@ -196,7 +158,7 @@ getAuthorId(authorName:string){
   if(authorId==-1){
     authorId=this.addAuthor(firstName, lastName);
   }
-    return authorId;
+    this.authorsIds.push(authorId);
 }
 
 getPublisherId(publisherName:string){
@@ -229,11 +191,5 @@ getCategoryId(selectedCategory:string){
 transformFilter(e:any){
   this.filter=e.target.value.toLowerCase();
 }
-
-// uploadFile(e:any){
-//   this.img = e.target.files[0];
-//   this.cover = e.target.files[0].name;
-//   }
-  
 
 }

@@ -21,13 +21,4 @@ export class DiscountmanagementService {
    }
 
 
-
-  //  public deleteDiscount(book_id:number){
-  //    return this.http.delete(`http://localhost:3000/api/admin/discounts/delete/${book_id}`);
-  //  }
-
-  //  public editDiscount(book_id:number, discount:number){
-  //    let edited_discount= {book_id, discount};
-  //    return this.http.put("http://localhost:3000/api/admin/discounts/edit", edited_discount);
-  //  }
 }
