@@ -18,8 +18,8 @@ export class CategoryDiscountComponent implements OnInit {
   books:Book[] = [];
   categories:Category[]=[];
   booksAuthors:any[]=[];
-  filter:string='';
   discountForm:any;
+  successMsg:string='';
 
   constructor(service: DiscountmanagementService, prodService:PoductmanagementService) { 
     this.discountManagementService = service;
@@ -76,10 +76,6 @@ export class CategoryDiscountComponent implements OnInit {
       );
     }
     
-transformFilter(e:any){
-  this.filter=e.target.value.toLowerCase();
-}
-
   addCategoryDiscount(form:any){
     let categoryId = form.value.categoryId;
     this.books.forEach(book=>{
@@ -88,6 +84,7 @@ transformFilter(e:any){
       }
     })
      form.resetForm();
+     this.successMsg = 'Discount has been applied'
   }
 
 }

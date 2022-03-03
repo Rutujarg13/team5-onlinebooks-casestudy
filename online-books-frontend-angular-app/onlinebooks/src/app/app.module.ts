@@ -18,6 +18,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { AdminAuthGuardService } from './services/admin-auth-guard.service';
 import { BookDiscountComponent } from './components/book-discount/book-discount.component';
 import { CategoryDiscountComponent } from './components/category-discount/category-discount.component';
+import { DiscountHistoryComponent } from './components/discount-history/discount-history.component';
  
 
 const routes:Routes= [
@@ -36,6 +37,7 @@ const routes:Routes= [
     AdminNavComponent,
     BookDiscountComponent,
     CategoryDiscountComponent,
+    DiscountHistoryComponent,
   ],
   imports: [
     BrowserModule,

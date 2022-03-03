@@ -140,8 +140,24 @@ newBook(form:any){
   authors.forEach((author:string)=>{
     this.getAuthorId(author);
   });
-  this.authorsIds=[]
-  console.log(this.authorsIds);
+  let categoryId = this.getCategoryId(form.value.selectedCategory);
+  let publisherId = this.getPublisherId(form.value.selectedPublisher);
+  let price = form.value.price;
+  let quantity = form.value.quantity;
+  let description = form.value.description;
+  let cover = form.value.cover;
+  let book ={      
+        "title":title,
+          "publisher_id": publisherId,
+          "price": price,
+          "quantity": quantity,
+          "description":description,
+          "category_id":categoryId,
+          "cover":cover,
+          "authors":[this.authorsIds]
+        };
+        this.addBook(book);
+        form.resetForm();
 }
 
 getAuthorId(authorName:string){
